@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //$a = new \Jenssegers\Agent\Agent();
+    // dd($a->languages());
     return view('welcome');
 });
