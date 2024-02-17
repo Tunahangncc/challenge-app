@@ -25,4 +25,11 @@ class GetCheckSubscriptionRequest extends FormRequest
             'client_token' => ['required', 'string', 'exists:devices,client_token']
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'client_token' => __('Client Token')
+        ];
+    }
 }

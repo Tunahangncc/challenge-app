@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('operating_systems', function (Blueprint $table) {
             $table->id();
             $table->string('os_name');
-            $table->string('os_language');
+            $table->string('os_language')->nullable();
             $table->string('browser_name');
             $table->string('browser_version');
             $table->string('platform_name');

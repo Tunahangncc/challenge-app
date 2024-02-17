@@ -3,6 +3,7 @@
 namespace Database\Factories\Device;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Device\Device>
@@ -17,15 +18,15 @@ class DeviceFactory extends Factory
     public function definition(): array
     {
         return [
-            'uid' => $this->faker->unique()->uuid,
-            'app_uid' => $this->faker->unique()->uuid,
+            'uid' => Str::uuid()->toString(),
+            'app_uid' => Str::uuid()->toString(),
         ];
     }
 
-    public function withClientId(): DeviceFactory|Factory
+    public function withClientToken(): DeviceFactory|Factory
     {
         return $this->state([
-            'client_id' => $this->faker->unique()->uuid
+            'client_token' => Str::uuid()->toString()
         ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models\Device;
 
+use App\Enums\TransactionTypes;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $platform_version
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\Device\OperatingSystemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem query()
@@ -43,4 +46,19 @@ class OperatingSystem extends Model
         'platform_name',
         'platform_version',
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function (self $system) {
+            Transaction::query()->create([
+                'model_id' => $system->id,
+                'model_class' => self::class,
+                'link' => request()->url(),
+                'description' => "The device's operating system information has been recorded",
+                'transaction_type' => TransactionTypes::CREATE,
+            ]);
+        });
+    }
 }

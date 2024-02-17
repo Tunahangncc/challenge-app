@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Device\Device;
+use App\Models\Device\OperatingSystem;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Purchase>
@@ -18,37 +20,39 @@ class PurchaseFactory extends Factory
     public function definition(): array
     {
         return [
-            'receipt' => $this->faker->unique()->uuid,
+            'receipt' => Str::uuid()->toString(),
         ];
     }
 
     public function withDevice(): PurchaseFactory|Factory
     {
         return $this->state([
-            'device_id' => Device::factory()->create([
-                'client_token' => $this->faker->unique()->uuid
-            ])->id
+            'device_id' => Device::factory()
+                ->withClientToken()
+                ->hasAttached(OperatingSystem::factory()->count(1))
+                ->create()
+                ->id
         ]);
     }
 
     public function withExpireDate(): PurchaseFactory|Factory
     {
         return $this->state([
-            'expire_date' => now()->format('Y-m-d')
+            'expire_date' => $this->faker->dateTimeThisDecade()
         ]);
     }
 
     public function receiptNumberLastDigitOddNumber(): PurchaseFactory|Factory
     {
         return $this->state([
-            'receipt' => $this->faker->unique()->uuid . $this->faker->randomElement([1, 3, 5, 7, 9])
+            'receipt' => Str::uuid()->toString() . $this->faker->randomElement([1, 3, 5, 7, 9])
         ]);
     }
 
     public function receiptNumberLastDigitEventNumber(): PurchaseFactory|Factory
     {
         return $this->state([
-            'receipt' => $this->faker->unique()->uuid . $this->faker->randomElement([0, 2, 4, 6, 8])
+            'receipt' => Str::uuid()->toString() . $this->faker->randomElement([0, 2, 4, 6, 8])
         ]);
     }
 }

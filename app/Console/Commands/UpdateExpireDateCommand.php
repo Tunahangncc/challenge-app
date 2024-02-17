@@ -26,6 +26,6 @@ class UpdateExpireDateCommand extends Command
      */
     public function handle(): void
     {
-        UpdateExpireDateJob::dispatchSync();
+        UpdateExpireDateJob::dispatch();
     }
 }

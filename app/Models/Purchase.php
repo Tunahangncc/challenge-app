@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionTypes;
 use App\Models\Device\Device;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -47,5 +48,42 @@ class Purchase extends Model
     public function device(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Device::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::updated(function (self $purchase) {
+            if ($purchase->isDirty('expire_date')) {
+                Transaction::query()->create([
+                    'model_id' => $purchase->id,
+                    'model_class' => self::class,
+                    'link' => request()->url(),
+                    'description' => 'Expiration date updated. New date: ' . $purchase->expire_date,
+                    'transaction_type' => TransactionTypes::UPDATE
+                ]);
+            }
+
+            if ($purchase->isDirty('cancelled')) {
+                Transaction::query()->create([
+                    'model_id' => $purchase->id,
+                    'model_class' => self::class,
+                    'link' => request()->url(),
+                    'description' => 'Subscription canceled because it has expired',
+                    'transaction_type' => TransactionTypes::CANCELLED,
+                ]);
+            }
+        });
+
+        static::created(function (self $purchase) {
+            Transaction::query()->create([
+                'model_id' => $purchase->id,
+                'model_class' => self::class,
+                'link' => request()->url(),
+                'description' => 'A purchase was made for the device with ' . $purchase->device_id . ' ID.',
+                'transaction_type' => TransactionTypes::CREATE,
+            ]);
+        });
     }
 }

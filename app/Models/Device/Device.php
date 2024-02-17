@@ -2,7 +2,9 @@
 
 namespace App\Models\Device;
 
+use App\Enums\TransactionTypes;
 use App\Models\Purchase;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Device\OperatingSystem> $operatingSystems
  * @property-read int|null $operating_systems_count
  * @property-read Purchase|null $subscription
+ * @method static \Database\Factories\Device\DeviceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Device newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Device newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Device query()
@@ -39,6 +42,7 @@ class Device extends Model
         'client_token'
     ];
 
+    #region Relations
     public function operatingSystems(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(
@@ -52,5 +56,22 @@ class Device extends Model
     public function subscription(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Purchase::class, 'device_id', 'id');
+    }
+
+    #endregion
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function (self $device) {
+            Transaction::query()->create([
+                'model_id' => $device->id,
+                'model_class' => self::class,
+                'link' => request()->url(),
+                'description' => 'Device registration created for the new application',
+                'transaction_type' => TransactionTypes::CREATE
+            ]);
+        });
     }
 }
