@@ -8,6 +8,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [APIController::class, 'postRegister']);
-Route::post('purchase', [APIController::class, 'postPurchase']);
-Route::post('check-subscription', [APIController::class, 'postCheckSubscription']);
+Route::as('api.')->group(function () {
+    Route::post('register', [APIController::class, 'postRegister'])->name('register');
+    Route::post('purchase', [APIController::class, 'postPurchase'])->name('purchase');
+    Route::post('check-subscription', [APIController::class, 'postCheckSubscription'])->name('check-subscription');
+});

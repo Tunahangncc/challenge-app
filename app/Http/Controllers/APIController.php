@@ -8,7 +8,6 @@ use App\Http\Requests\PostRegisterRequest;
 use App\Models\Device\Device;
 use App\Models\Device\OperatingSystem;
 use App\Models\Purchase;
-use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use Ramsey\Uuid\Uuid;
@@ -31,6 +30,7 @@ class APIController extends Controller
             return response()->json([
                 'status' => true,
                 'client_token' => $device->client_token,
+                'message' => __('The device is already registered')
             ]);
         }
 
@@ -52,8 +52,10 @@ class APIController extends Controller
     {
         $data = $request->validated();
 
+        // Device is found with Client Token
         $device = Device::whereClientToken($data['client_token'])->first();
 
+        // If the last digit of the sent receipt is not an odd number, an error is given.
         $receiptLastNumber = substr($data['receipt'], -1);
         if ((int) $receiptLastNumber % 2 == 0) {
             return response()->json([
@@ -62,6 +64,7 @@ class APIController extends Controller
             ]);
         }
 
+        // If there is no purchase, a new purchase will be created
         $purchase = Purchase::query()->create([
             'receipt' => $data['receipt'],
             'device_id' => $device->id,
@@ -74,7 +77,7 @@ class APIController extends Controller
         ]);
     }
 
-    public function postCheckSubscription(GetCheckSubscriptionRequest $request)
+    public function postCheckSubscription(GetCheckSubscriptionRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
 

@@ -41,7 +41,7 @@ class Purchase extends Model
     ];
 
     protected $casts = [
-        'expire_date' => 'datetime'
+        'expire_date' => 'date'
     ];
 
     public function device(): \Illuminate\Database\Eloquent\Relations\BelongsTo

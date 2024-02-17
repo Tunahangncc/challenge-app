@@ -12,7 +12,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $failAlertMail = config('queue.failed.fail_alert_mail');
+
+        $schedule->command('app:update-expire-date')
+            ->daily()
+            ->emailOutputOnFailure($failAlertMail);
     }
 
     /**

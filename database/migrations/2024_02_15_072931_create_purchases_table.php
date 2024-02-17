@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('receipt')->unique();
             $table->unsignedBigInteger('device_id');
             $table->boolean('cancelled')->default(false);
-            $table->dateTime('expire_date');
+            $table->date('expire_date');
             $table->timestamps();
 
             $table->foreign('device_id')->references('id')->on('devices')
