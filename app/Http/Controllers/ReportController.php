@@ -23,7 +23,7 @@ class ReportController extends Controller
 
     public function getAllDeviceWithOsInformation(): JsonResponse
     {
-        SendAllDeviceWithOSInformationReportJob::dispatchSync();
+        SendAllDeviceWithOSInformationReportJob::dispatch();
 
         return $this->responseJson([
             'status' => true,

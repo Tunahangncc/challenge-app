@@ -13,6 +13,6 @@ class CancellationOfExpiredSubscriptionsCommand extends Command
 
     public function handle(): void
     {
-        CancelExpiredSubscriptionJob::dispatchSync();
+        CancelExpiredSubscriptionJob::dispatch();
     }
 }
