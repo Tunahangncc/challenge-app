@@ -107,3 +107,5 @@ And for saving Excel files sent via email, I've implemented the **maatwebsite/ex
 - I'm running a command using the cron structure. This command queues a job. This job cancels subscriptions that have expired.
 - I used queue structures again for sending emails. At the same time, I used the mail class and the export class.
 - I wrote unit tests for the project.
+- To test the project, simply run 'php artisan db:seed' in the terminal. This seeder creates 1000 devices and also links purchases and OS information to each device.
+- I used the **barryvdh/laravel-ide-helper** package in the model files for easier work.
