@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TransactionTypes;
 use App\Models\Device\Device;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereReceipt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereUpdatedAt($value)
+ * @method static Builder|Purchase expiredSubscriptions()
+ * @method static \Database\Factories\PurchaseFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
@@ -51,6 +54,16 @@ class Purchase extends Model
     {
         return $this->belongsTo(Device::class);
     }
+
+    // region Scopes
+    public function scopeExpiredSubscriptions(Builder $query): Builder
+    {
+        return $query
+            ->where('cancelled', 0)
+            ->where('expire_date', '<', now()->format('Y-m-d'));
+    }
+
+    // endregion
 
     protected static function boot(): void
     {
