@@ -1,0 +1,9 @@
+{
+    "The device is already registered": "Cihaz zaten kayıtlı",
+    "Device UID": "Cihaz UID",
+    "APP UID": "Uygulama UID",
+    "Client Token": "İstemci Anahtarı",
+    "Receipt": "Fiş",
+    "Language": "Dil",
+    "System language changed to :lang": "Sistem dili :lang olarak değiştirildi"
+}

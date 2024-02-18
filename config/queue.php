@@ -104,6 +104,7 @@ return [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
         'database' => env('DB_CONNECTION', 'mysql'),
         'table' => 'failed_jobs',
+        'fail_alert_mail' => env('QUEUE_FAIL_ALERT_MAIL', 'tunahangncc@gmail.com'),
     ],
 
 ];

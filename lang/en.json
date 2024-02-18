@@ -1,0 +1,9 @@
+{
+    "The device is already registered": "The device is already registered",
+    "Device UID": "Device UID",
+    "APP UID": "APP UID",
+    "Client Token": "Client Token",
+    "Receipt": "Receipt",
+    "Language": "Language",
+    "System language changed to :lang": "System language changed to :lang"
+}

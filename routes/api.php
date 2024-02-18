@@ -1,19 +1,26 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+// Devices Routes
+Route::prefix('device')->as('device.')->group(function () {
+    // Route ==> Change device language
+    Route::post('change-language', [DeviceController::class, 'postChangeLanguage'])->name('change-language');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    // Route ==> Device Register
+    Route::post('register', [DeviceController::class, 'postRegister'])->name('register');
+
+    // Route ==> Check Subscription
+    Route::get('check-subscription', [DeviceController::class, 'getCheckSubscription'])->name('check-subscription');
+});
+
+// Purchases Routes
+Route::prefix('purchase')->as('purchase')->group(function () {
+    // Route ==> Purchase
+    Route::post('/', [PurchaseController::class, 'postPurchase'])->name('purchase');
+
+    // Route ==> Recovery Purchase
+    Route::post('/recovery', [PurchaseController::class, 'postRecoveryPurchase'])->name('recovery');
 });
