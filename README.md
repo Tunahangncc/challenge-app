@@ -94,4 +94,16 @@ To retrieve user system information, I've integrated the **jenssegers/agent** pa
 
 And for saving Excel files sent via email, I've implemented the **maatwebsite/excel** package.
 
+# What did I include in the project ?
 
+- I aimed to utilize enum structures, and you can find the files by following the path app/Enums,
+- I created a small export file trait for Excel export,
+- I have used language translations. Messages in requests sent via the API vary according to the device language,
+    - When making requests via the API, by specifying "X-Localization" in the header section, you can switch between the supported languages in the system.
+- When making a request via API, you should send the 'User-Agent' data in the header section to access user information
+- I created a custom helper class and autoloaded it using Composer. The desired helper can be written in that file. When a change is made to the file, 'composer dump-autoload' should be executed in the terminal. The file can be accessed from the 'app' directory.
+- I wrote a new middleware. The name of this middleware is 'Localization'. This middleware changes the system's language.
+- I also used request and resource classes at the same time.
+- I'm running a command using the cron structure. This command queues a job. This job cancels subscriptions that have expired.
+- I used queue structures again for sending emails. At the same time, I used the mail class and the export class.
+- I wrote unit tests for the project.
