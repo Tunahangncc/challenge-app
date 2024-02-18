@@ -9,7 +9,7 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:cancellation-of-expired-subscriptions')->everyMinute();
+        $schedule->command('app:cancellation-of-expired-subscriptions')->daily();
     }
 
     protected function commands(): void
