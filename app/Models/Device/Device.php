@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Device\OperatingSystem> $operatingSystems
  * @property-read int|null $operating_systems_count
  * @property-read Purchase|null $subscription
+ *
  * @method static \Database\Factories\Device\DeviceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Device newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Device newQuery()
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Device whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Device whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Device whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Device extends Model
@@ -39,10 +41,10 @@ class Device extends Model
     protected $fillable = [
         'uid',
         'app_uid',
-        'client_token'
+        'client_token',
     ];
 
-    #region Relations
+    // region Relations
     public function operatingSystems(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(
@@ -58,7 +60,7 @@ class Device extends Model
         return $this->hasOne(Purchase::class, 'device_id', 'id');
     }
 
-    #endregion
+    // endregion
 
     protected static function boot(): void
     {
@@ -70,7 +72,7 @@ class Device extends Model
                 'model_class' => self::class,
                 'link' => request()->url(),
                 'description' => 'Device registration created for the new application',
-                'transaction_type' => TransactionTypes::CREATE
+                'transaction_type' => TransactionTypes::CREATE,
             ]);
         });
     }

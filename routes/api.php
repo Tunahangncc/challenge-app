@@ -1,22 +1,26 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\APIController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\PurchaseController;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Devices Routes
+Route::prefix('device')->as('device.')->group(function () {
+    // Route ==> Change device language
+    Route::post('change-language', [DeviceController::class, 'postChangeLanguage'])->name('change-language');
+
+    // Route ==> Device Register
+    Route::post('register', [DeviceController::class, 'postRegister'])->name('register');
+
+    // Route ==> Check Subscription
+    Route::get('check-subscription', [DeviceController::class, 'getCheckSubscription'])->name('check-subscription');
 });
 
-Route::as('api.')->group(function () {
-    // Change Lang
-    Route::post('change-lang', [APIController::class, 'getChangeLang'])->name('change-lang');
+// Purchases Routes
+Route::prefix('purchase')->as('purchase')->group(function () {
+    // Route ==> Purchase
+    Route::post('/', [PurchaseController::class, 'postPurchase'])->name('purchase');
 
-    // Purchase Routes
-    Route::post('purchase', [PurchaseController::class, 'postPurchase'])->name('purchase');
-    Route::post('recovery-purchase', [PurchaseController::class, 'postRecoveryExpireDate'])->name('recovery-purchase');
-
-    Route::post('register', [APIController::class, 'postRegister'])->name('register');
-    Route::post('check-subscription', [APIController::class, 'postCheckSubscription'])->name('check-subscription');
+    // Route ==> Recovery Purchase
+    Route::post('/recovery', [PurchaseController::class, 'postRecoveryPurchase'])->name('recovery');
 });

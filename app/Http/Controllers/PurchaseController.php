@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostPurchaseRecoveryExpireDateRequest;
-use App\Http\Requests\PostPurchaseRequest;
+use App\Http\Requests\Purchase\PostPurchaseRecoveryExpireDateRequest;
+use App\Http\Requests\Purchase\PostPurchaseRequest;
 use App\Models\Device\Device;
 use App\Models\Purchase;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
 
 class PurchaseController extends Controller
 {
-    public function postPurchase(PostPurchaseRequest $request): \Illuminate\Http\JsonResponse
+    public function postPurchase(PostPurchaseRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        // Device is found with Client Token
         $device = Device::whereClientToken($data['client_token'])->first();
 
         // If the last digit of the sent receipt is not an odd number, an error is given.
@@ -41,7 +39,7 @@ class PurchaseController extends Controller
         ]);
     }
 
-    public function postRecoveryExpireDate(PostPurchaseRecoveryExpireDateRequest $request): \Illuminate\Http\JsonResponse
+    public function postRecoveryPurchase(PostPurchaseRecoveryExpireDateRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -54,7 +52,7 @@ class PurchaseController extends Controller
 
         return response()->json([
             'status' => true,
-            'expire_date' => $purchase->expire_date
+            'expire_date' => $purchase->expire_date,
         ]);
     }
 }

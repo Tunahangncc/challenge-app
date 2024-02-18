@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $platform_version
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Database\Factories\Device\OperatingSystemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem newQuery()
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem wherePlatformName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem wherePlatformVersion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OperatingSystem whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class OperatingSystem extends Model

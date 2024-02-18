@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Device $device
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase query()
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereReceipt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Purchase extends Model
@@ -38,11 +40,11 @@ class Purchase extends Model
         'receipt',
         'device_id',
         'cancelled',
-        'expire_date'
+        'expire_date',
     ];
 
     protected $casts = [
-        'expire_date' => 'date'
+        'expire_date' => 'date',
     ];
 
     public function device(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -60,8 +62,8 @@ class Purchase extends Model
                     'model_id' => $purchase->id,
                     'model_class' => self::class,
                     'link' => request()->url(),
-                    'description' => 'Expiration date updated. New date: ' . $purchase->expire_date,
-                    'transaction_type' => TransactionTypes::UPDATE
+                    'description' => 'Expiration date updated. New date: '.$purchase->expire_date,
+                    'transaction_type' => TransactionTypes::UPDATE,
                 ]);
             }
 
@@ -81,7 +83,7 @@ class Purchase extends Model
                 'model_id' => $purchase->id,
                 'model_class' => self::class,
                 'link' => request()->url(),
-                'description' => 'A purchase was made for the device with ' . $purchase->device_id . ' ID.',
+                'description' => 'A purchase was made for the device with '.$purchase->device_id.' ID.',
                 'transaction_type' => TransactionTypes::CREATE,
             ]);
         });

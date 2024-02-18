@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Purchase;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetCheckSubscriptionRequest extends FormRequest
+class PostPurchaseRecoveryExpireDateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,14 @@ class GetCheckSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_token' => ['required', 'string', 'exists:devices,client_token']
+            'receipt' => ['required', 'exists:purchases,receipt'],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'client_token' => __('Client Token')
+            'receipt' => __('Receipt'),
         ];
     }
 }

@@ -157,6 +157,6 @@ return static function (RectorConfig $rectorConfig): void {
         CompactToVariablesRector::class,
         DisallowedEmptyRuleFixerRector::class,
         TernaryFalseExpressionToIfRector::class,
-        ClosureToArrowFunctionRector::class
+        ClosureToArrowFunctionRector::class,
     ]);
 };

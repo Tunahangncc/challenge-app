@@ -31,28 +31,28 @@ class PurchaseFactory extends Factory
                 ->withClientToken()
                 ->hasAttached(OperatingSystem::factory()->count(1))
                 ->create()
-                ->id
+                ->id,
         ]);
     }
 
     public function withExpireDate(): PurchaseFactory|Factory
     {
         return $this->state([
-            'expire_date' => $this->faker->dateTimeThisDecade()
+            'expire_date' => $this->faker->dateTimeThisDecade(),
         ]);
     }
 
     public function receiptNumberLastDigitOddNumber(): PurchaseFactory|Factory
     {
         return $this->state([
-            'receipt' => Str::uuid()->toString() . $this->faker->randomElement([1, 3, 5, 7, 9])
+            'receipt' => Str::uuid()->toString().$this->faker->randomElement([1, 3, 5, 7, 9]),
         ]);
     }
 
     public function receiptNumberLastDigitEventNumber(): PurchaseFactory|Factory
     {
         return $this->state([
-            'receipt' => Str::uuid()->toString() . $this->faker->randomElement([0, 2, 4, 6, 8])
+            'receipt' => Str::uuid()->toString().$this->faker->randomElement([0, 2, 4, 6, 8]),
         ]);
     }
 }

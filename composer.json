@@ -52,7 +52,8 @@
             "@php artisan key:generate --ansi"
         ],
         "test:rector": "rector --dry-run",
-        "test:pint": "pint --test"
+        "test:pint": "pint --test",
+        "test:pint:fix": "pint"
     },
     "extra": {
         "laravel": {

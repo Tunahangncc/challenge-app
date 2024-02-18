@@ -12,11 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $failAlertMail = config('queue.failed.fail_alert_mail');
-
         $schedule->command('app:update-expire-date')
-            ->daily()
-            ->emailOutputOnFailure($failAlertMail);
+            ->everySecond();
     }
 
     /**

@@ -21,9 +21,9 @@ class OperatingSystemFactory extends Factory
             'os_name' => $this->faker->randomElement(Agent::getDesktopDevices()),
             'os_language' => $this->faker->languageCode,
             'browser_name' => $this->faker->randomElement(Agent::getBrowsers()),
-            'browser_version' => $this->faker->randomElement(range(1, 10)) . '.' . $this->faker->randomElement(range(0, 9)),
+            'browser_version' => $this->faker->randomElement(range(1, 10)).'.'.$this->faker->randomElement(range(0, 9)),
             'platform_name' => $this->faker->randomElement(Agent::getPlatforms()),
-            'platform_version' => $this->faker->randomElement(range(1, 10)) . '.' . $this->faker->randomElement(range(0, 9)),
+            'platform_version' => $this->faker->randomElement(range(1, 10)).'.'.$this->faker->randomElement(range(0, 9)),
         ];
     }
 }

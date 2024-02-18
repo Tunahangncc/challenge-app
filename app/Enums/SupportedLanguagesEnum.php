@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum LanguageEnum: string
+enum SupportedLanguagesEnum: string
 {
     case TR = 'tr';
     case EN = 'en';

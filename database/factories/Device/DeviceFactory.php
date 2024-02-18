@@ -26,7 +26,7 @@ class DeviceFactory extends Factory
     public function withClientToken(): DeviceFactory|Factory
     {
         return $this->state([
-            'client_token' => Str::uuid()->toString()
+            'client_token' => Str::uuid()->toString(),
         ]);
     }
 }
