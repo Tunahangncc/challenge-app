@@ -103,7 +103,7 @@ And for saving Excel files sent via email, I've implemented the **maatwebsite/ex
 - When making a request via API, you should send the 'User-Agent' data in the header section to access user information
 - I created a custom helper class and autoloaded it using Composer. The desired helper can be written in that file. When a change is made to the file, 'composer dump-autoload' should be executed in the terminal. The file can be accessed from the 'app' directory.
 - I wrote a new middleware. The name of this middleware is 'Localization'. This middleware changes the system's language.
-- I also used request and resource classes at the same time.
+- I used request and resources classes in the project.
 - I'm running a command using the cron structure. This command queues a job. This job cancels subscriptions that have expired.
 - I used queue structures again for sending emails. At the same time, I used the mail class and the export class.
 - I wrote unit tests for the project.
